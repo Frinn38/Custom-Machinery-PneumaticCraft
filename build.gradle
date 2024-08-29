@@ -4,6 +4,7 @@ plugins {
     id 'idea'
     id 'maven-publish'
     id 'net.neoforged.gradle.userdev' version '7.0.145'
+    id"me.shedaniel.unified-publishing" version "0.1.+"
 }
 
 tasks.named('wrapper', Wrapper).configure {
@@ -15,15 +16,13 @@ tasks.named('wrapper', Wrapper).configure {
     distributionType = Wrapper.DistributionType.BIN
 }
 
-version = mod_version
-group = mod_group_id
-
 repositories {
     mavenLocal()
 }
 
 base {
-    archivesName = mod_id
+    archivesName = mod_artifact_name
+    version = "${minecraft_version}-${mod_version}"
 }
 
 // Mojang ships Java 21 to end users starting in 1.20.5, so mods should target Java 21.
@@ -89,36 +88,78 @@ configurations {
     runtimeClasspath.extendsFrom localRuntime
 }
 
+repositories {
+    maven {
+        name = "Frinn's maven"
+        url = 'https://maven.frinn.fr/repository/maven/'
+        content {
+            includeGroup "frinn.custommachinery"
+        }
+    }
+    maven {
+        name = "Shedaniel's maven"
+        url = "https://maven.shedaniel.me/"
+        content {
+            includeGroup "me.shedaniel.cloth"
+        }
+    }
+    maven {
+        name = "BlameJared Maven"
+        url = "https://maven.blamejared.com"
+        content {
+            includeGroup "com.blamejared.crafttweaker"
+            includeGroup "org.openzen.zencode"
+            includeGroup "mezz.jei"
+        }
+    }
+    maven {
+        name = "Lat's maven"
+        url = "https://maven.saps.dev/releases"
+        content {
+            includeGroup "dev.latvian.mods"
+            includeGroup "dev.latvian.apps"
+        }
+    }
+    maven {
+        name = "Mod maven"
+        url = "https://modmaven.dev/"
+        content {
+            includeGroup "mcjty.theoneprobe"
+            includeGroup "me.desht.pneumaticcraft"
+        }
+    }
+    //Needed for PneumaticCraft
+    maven {
+        url "https://www.cursemaven.com"
+        content {
+            includeGroup "curse.maven"
+        }
+    }
+    //Curios for PneumaticCraft
+    maven {
+        name "OctoStudios"
+        url "https://maven.octo-studios.com/releases"
+        content {
+            includeGroup "top.theillusivec4.curios"
+        }
+    }
+}
+
 dependencies {
-    // Specify the version of Minecraft to use.
-    // Depending on the plugin applied there are several options. We will assume you applied the userdev plugin as shown above.
-    // The group for userdev is net.neoforged, the module name is neoforge, and the version is the same as the neoforge version.
-    // You can however also use the vanilla plugin (net.neoforged.gradle.vanilla) to use a version of Minecraft without the neoforge loader.
-    // And its provides the option to then use net.minecraft as the group, and one of; client, server or joined as the module name, plus the game version as version.
-    // For all intends and purposes: You can treat this dependency as if it is a normal library you would use.
     implementation "net.neoforged:neoforge:${neo_version}"
 
-    // Example optional mod dependency with JEI
-    // The JEI API is declared for compile time use, while the full JEI artifact is used at runtime
-    // compileOnly "mezz.jei:jei-${mc_version}-common-api:${jei_version}"
-    // compileOnly "mezz.jei:jei-${mc_version}-neoforge-api:${jei_version}"
-    // We add the full version to localRuntime, not runtimeOnly, so that we do not publish a dependency on it
-    // localRuntime "mezz.jei:jei-${mc_version}-neoforge:${jei_version}"
+    //Custom Machinery
+    api("frinn.custommachinery:CustomMachinery-neoforge:${minecraft_version}-${cm_version}")
 
-    // Example mod dependency using a mod jar from ./libs with a flat dir repository
-    // This maps to ./libs/coolmod-${mc_version}-${coolmod_version}.jar
-    // The group id is ignored when searching -- in this case, it is "blank"
-    // implementation "blank:coolmod-${mc_version}:${coolmod_version}"
+    //PNC
+    api("me.desht.pneumaticcraft:pneumaticcraft-repressurized:${pnc_version}+mc${minecraft_version}-SNAPSHOT") {transitive = false}
 
-    // Example mod dependency using a file as dependency
-    // implementation files("libs/coolmod-${mc_version}-${coolmod_version}.jar")
+    // JEI
+    compileOnly("mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}")
+    localRuntime("mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}")
 
-    // Example project dependency using a sister or child project:
-    // implementation project(":myproject")
-
-    // For more info:
-    // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
-    // http://www.gradle.org/docs/current/userguide/dependency_management.html
+    // KubeJS
+    localRuntime compileOnly("dev.latvian.mods:kubejs-neoforge:${kubejs_version}")
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.
@@ -137,7 +178,11 @@ tasks.withType(ProcessResources).configureEach {
             mod_license            : mod_license,
             mod_version            : mod_version,
             mod_authors            : mod_authors,
-            mod_description        : mod_description
+            mod_description        : mod_description,
+            mod_url                : mod_url,
+            mod_issues             : mod_issues,
+            cm_version             : cm_version,
+            pnc_version            : pnc_version
     ]
     inputs.properties replaceProperties
 
@@ -146,16 +191,49 @@ tasks.withType(ProcessResources).configureEach {
     }
 }
 
-// Example configuration to allow publishing using the maven-publish plugin
 publishing {
     publications {
         register('mavenJava', MavenPublication) {
+            groupId = mod_group_id
+            artifactId = archivesBaseName
+            version = project.version
             from components.java
+
+            pom {
+                name = mod_name
+                description = mod_description
+                packaging = 'jar'
+                scm {
+                    url = mod_github
+                }
+                issueManagement {
+                    system = 'github'
+                    url = mod_issues
+                }
+                licenses {
+                    license {
+                        name = mod_license
+                        distribution = 'repo'
+                    }
+                }
+                developers {
+                    developer {
+                        id = mod_authors
+                        name = mod_authors
+                        roles = ['developper']
+                    }
+                }
+            }
         }
     }
     repositories {
         maven {
-            url "file://${project.projectDir}/repo"
+            name = 'maven'
+            url = 'https://maven.frinn.fr/repository/maven/'
+            credentials {
+                username = 'frinn'
+                password = System.getenv('MAVEN_PASSWORD')
+            }
         }
     }
 }
@@ -169,5 +247,51 @@ idea {
     module {
         downloadSources = true
         downloadJavadoc = true
+    }
+}
+
+unifiedPublishing {
+    project {
+        displayName = "[NeoForge]Custom-Machinery-PneumaticCraft-${minecraft_version}-${mod_version}"
+        releaseType = "release"
+        if(rootProject.file("CHANGELOG.md").exists()) {
+            changelog = rootProject.file("CHANGELOG.md").text
+        }
+        gameVersions = ["${minecraft_version}", "1.21"]
+        gameLoaders = ["neoforge"]
+        mainPublication jar
+
+        var CURSE_API_KEY = System.getenv("CURSEFORGE")
+        if (CURSE_API_KEY != null) {
+            curseforge {
+                token = CURSE_API_KEY
+                id = "1093049"
+                gameVersions.addAll "Java 21"
+                relations {
+                    depends "custom-machinery"
+                    depends "pneumaticcraft-repressurized"
+                    optional "kubejs"
+                    optional "jei"
+                    optional "the-one-probe"
+                    optional "jade"
+                }
+            }
+        }
+
+        var MODRINTH_TOKEN = System.getenv("MODRINTH")
+        if (MODRINTH_TOKEN != null) {
+            modrinth {
+                token = MODRINTH_TOKEN
+                id = "VFxg3xmP"
+                relations {
+                    depends "custom-machinery"
+                    depends "pneumaticcraft-repressurized"
+                    optional "kubejs"
+                    optional "jei"
+                    optional "the-one-probe"
+                    optional "jade"
+                }
+            }
+        }
     }
 }
