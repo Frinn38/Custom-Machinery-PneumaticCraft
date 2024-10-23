@@ -120,6 +120,13 @@ repositories {
             includeGroup "dev.latvian.apps"
         }
     }
+    //Needed for KubeJS
+    maven {
+        url 'https://jitpack.io'
+        content {
+            includeGroup "com.github.rtyley"
+        }
+    }
     maven {
         name = "Mod maven"
         url = "https://modmaven.dev/"

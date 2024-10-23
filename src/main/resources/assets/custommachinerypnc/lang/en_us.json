@@ -1,0 +1,22 @@
+{
+  "custommachinerypnc.gui.element.pressure.tooltip": "Pressure: %s",
+
+  "custommachinery.machine.guielement.pressure": "Pressure",
+
+  "custommachinerypnc.gui.creation.components.pressure.title": "Pressure",
+  "custommachinerypnc.gui.creation.components.pressure.volume": "Volume",
+  "custommachinerypnc.gui.creation.components.pressure.volume.tooltip": "Air volume of the machine\nGreater volumes will take longer to pressurize",
+  "custommachinerypnc.gui.creation.components.pressure.danger": "Danger",
+  "custommachinerypnc.gui.creation.components.pressure.danger.tooltip": "Start of the red pressure on the gauge\nAbove, the machine has a chance to explode",
+  "custommachinerypnc.gui.creation.components.pressure.critical": "Critical",
+  "custommachinerypnc.gui.creation.components.pressure.critical.tooltip": "Highest value on the gauge\nAbove, the machine will explode",
+  "custommachinerypnc.gui.creation.components.pressure.critical_inferior": "Critical pressure must be superior to danger pressure",
+
+  "custommachinerypnc.jei.ingredient.pressure": "Pressure between %s and %s",
+  "custommachinerypnc.jei.ingredient.pressure.volume.input": "Consume %s air",
+  "custommachinerypnc.jei.ingredient.pressure.volume.output": "Produce %s air",
+
+  "custommachinerypnc.requirements.pressure.error.min": "Pressure must be higher than %s",
+  "custommachinerypnc.requirements.pressure.error.max": "Pressure must be lower than %s",
+  "custommachinerypnc.requirements.pressure.error.air": "Not enough air volume, %s needed but %s found!"
+}

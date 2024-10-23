@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "package": "fr.frinn.custommachinerypnc.common.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "KubeJSIntegrationMixin",
+    "MachineJSMixin"
+  ],
+  "client": [
+
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
