@@ -11,6 +11,7 @@ import fr.frinn.custommachinery.api.component.MachineComponentType;
 import fr.frinn.custommachinery.api.network.ISyncable;
 import fr.frinn.custommachinery.api.network.ISyncableStuff;
 import fr.frinn.custommachinery.common.network.syncable.FloatSyncable;
+import fr.frinn.custommachinery.common.network.syncable.ToggleSideConfigSyncable;
 import fr.frinn.custommachinery.impl.component.AbstractMachineComponent;
 import fr.frinn.custommachinery.impl.component.config.ToggleSideConfig;
 import fr.frinn.custommachinerypnc.common.Registration;
@@ -39,6 +40,8 @@ public class PressureMachineComponent extends AbstractMachineComponent implement
 
     private void refreshConnectableFaces() {
         this.handler.setConnectableFaces(Arrays.stream(Direction.values()).filter(side -> this.config.getSideMode(side).isEnabled()).toList());
+        this.getManager().getTile().invalidateCapabilities();
+        this.getManager().getLevel().updateNeighborsAt(this.getManager().getTile().getBlockPos(), this.getManager().getTile().getBlockState().getBlock());
     }
 
     public IAirHandlerMachine getHandler() {
@@ -88,6 +91,7 @@ public class PressureMachineComponent extends AbstractMachineComponent implement
     @Override
     public void getStuffToSync(Consumer<ISyncable<?, ?>> container) {
         container.accept(FloatSyncable.create(this.handler::getPressure, this.handler::setPressure));
+        container.accept(ToggleSideConfigSyncable.create(this::getConfig, this.config::set));
     }
 
     public record Template(int volume, float danger, float critical, ToggleSideConfig.Template config) implements IMachineComponentTemplate<PressureMachineComponent> {

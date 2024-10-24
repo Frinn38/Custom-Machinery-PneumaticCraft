@@ -29,8 +29,9 @@ public class CustomMachineryPnc {
         event.registerBlockEntity(PNCCapabilities.AIR_HANDLER_MACHINE, fr.frinn.custommachinery.common.init.Registration.CUSTOM_MACHINE_TILE.get(), new ICapabilityProvider<>() {
             @Nullable
             @Override
-            public IAirHandlerMachine getCapability(CustomMachineTile machine, Direction context) {
+            public IAirHandlerMachine getCapability(CustomMachineTile machine, Direction side) {
                 return machine.getComponentManager().getComponent(Registration.PRESSURE_COMPONENT.get())
+                        .filter(component -> component.getConfig().getSideMode(side).isEnabled())
                         .map(PressureMachineComponent::getHandler)
                         .orElse(null);
             }
