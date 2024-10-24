@@ -9,7 +9,7 @@ import fr.frinn.custommachinery.client.screen.creation.component.IMachineCompone
 import fr.frinn.custommachinery.client.screen.popup.PopupScreen;
 import fr.frinn.custommachinery.client.screen.widget.FloatSlider;
 import fr.frinn.custommachinery.client.screen.widget.IntegerEditBox;
-import fr.frinn.custommachinery.impl.component.config.IOSideConfig;
+import fr.frinn.custommachinery.impl.component.config.ToggleSideConfig;
 import fr.frinn.custommachinerypnc.common.Registration;
 import fr.frinn.custommachinerypnc.common.component.PressureMachineComponent;
 import fr.frinn.custommachinerypnc.common.component.PressureMachineComponent.Template;
@@ -45,7 +45,7 @@ public class PressureComponentBuilder implements IMachineComponentBuilder<Pressu
         private IntegerEditBox volume;
         private FloatSlider danger;
         private FloatSlider critical;
-        private IOSideConfig.Template config;
+        private ToggleSideConfig.Template config;
 
         public PressureComponentBuilderPopup(BaseScreen parent, @Nullable Template template, Consumer<Template> onFinish) {
             super(parent, template, onFinish, Component.translatable("custommachinerypnc.gui.creation.components.pressure.title"));
@@ -84,7 +84,7 @@ public class PressureComponentBuilder implements IMachineComponentBuilder<Pressu
             this.critical.setTooltip(Tooltip.create(Component.translatable("custommachinerypnc.gui.creation.components.pressure.critical.tooltip")));
 
             //Config
-            this.baseTemplate().ifPresentOrElse(template -> this.config = template.config(), () -> this.config = IOSideConfig.Template.DEFAULT_ALL_INPUT);
+            this.baseTemplate().ifPresentOrElse(template -> this.config = template.config(), () -> this.config = ToggleSideConfig.Template.DEFAULT_ALL_ENABLED);
             this.propertyList.add(Component.translatable("custommachinery.gui.config.component"), ComponentConfigBuilderWidget.make(0, 0, 180, 20, Component.translatable("custommachinery.gui.config.component"), this.parent, () -> this.config, template -> this.config = template));
         }
     }

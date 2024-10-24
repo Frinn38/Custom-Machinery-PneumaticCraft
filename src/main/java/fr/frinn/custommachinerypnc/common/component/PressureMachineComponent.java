@@ -12,7 +12,7 @@ import fr.frinn.custommachinery.api.network.ISyncable;
 import fr.frinn.custommachinery.api.network.ISyncableStuff;
 import fr.frinn.custommachinery.common.network.syncable.FloatSyncable;
 import fr.frinn.custommachinery.impl.component.AbstractMachineComponent;
-import fr.frinn.custommachinery.impl.component.config.IOSideConfig;
+import fr.frinn.custommachinery.impl.component.config.ToggleSideConfig;
 import fr.frinn.custommachinerypnc.common.Registration;
 import me.desht.pneumaticcraft.api.PneumaticRegistry;
 import me.desht.pneumaticcraft.api.pressure.PressureTier;
@@ -27,10 +27,10 @@ import java.util.function.Consumer;
 public class PressureMachineComponent extends AbstractMachineComponent implements ISerializableComponent, ITickableComponent, ISideConfigComponent, ISyncableStuff {
 
     private final IAirHandlerMachine handler;
-    private final IOSideConfig config;
+    private final ToggleSideConfig config;
     private int prevAir = 0;
 
-    public PressureMachineComponent(IMachineComponentManager manager, int volume, float danger, float critical, IOSideConfig.Template config) {
+    public PressureMachineComponent(IMachineComponentManager manager, int volume, float danger, float critical, ToggleSideConfig.Template config) {
         super(manager, ComponentIOMode.BOTH);
         this.handler = PneumaticRegistry.getInstance().getAirHandlerMachineFactory().createAirHandler(new CustomPressureTier(danger, critical), volume);
         this.config = config.build(this);
@@ -38,7 +38,7 @@ public class PressureMachineComponent extends AbstractMachineComponent implement
     }
 
     private void refreshConnectableFaces() {
-        this.handler.setConnectableFaces(Arrays.stream(Direction.values()).filter(side -> !this.config.getSideMode(side).isNone()).toList());
+        this.handler.setConnectableFaces(Arrays.stream(Direction.values()).filter(side -> this.config.getSideMode(side).isEnabled()).toList());
     }
 
     public IAirHandlerMachine getHandler() {
@@ -76,7 +76,7 @@ public class PressureMachineComponent extends AbstractMachineComponent implement
     }
 
     @Override
-    public IOSideConfig getConfig() {
+    public ToggleSideConfig getConfig() {
         return this.config;
     }
 
@@ -90,14 +90,14 @@ public class PressureMachineComponent extends AbstractMachineComponent implement
         container.accept(FloatSyncable.create(this.handler::getPressure, this.handler::setPressure));
     }
 
-    public record Template(int volume, float danger, float critical, IOSideConfig.Template config) implements IMachineComponentTemplate<PressureMachineComponent> {
+    public record Template(int volume, float danger, float critical, ToggleSideConfig.Template config) implements IMachineComponentTemplate<PressureMachineComponent> {
 
         public static final NamedCodec<Template> CODEC = NamedCodec.record(templateInstance ->
                 templateInstance.group(
                         NamedCodec.INT.fieldOf("volume").forGetter(Template::volume),
                         NamedCodec.floatRange(0.0f, 25.0f).fieldOf("danger").forGetter(Template::danger),
                         NamedCodec.floatRange(0.0f, 25.0f).fieldOf("critical").forGetter(Template::critical),
-                        IOSideConfig.Template.CODEC.optionalFieldOf("config", IOSideConfig.Template.DEFAULT_ALL_BOTH).forGetter(Template::config)
+                        ToggleSideConfig.Template.CODEC.optionalFieldOf("config", ToggleSideConfig.Template.DEFAULT_ALL_ENABLED).forGetter(Template::config)
                 ).apply(templateInstance, Template::new), "Pressure machine component"
         );
 
