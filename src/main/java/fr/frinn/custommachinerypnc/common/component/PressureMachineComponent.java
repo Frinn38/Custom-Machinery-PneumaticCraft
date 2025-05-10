@@ -36,11 +36,11 @@ public class PressureMachineComponent extends AbstractMachineComponent implement
         this.handler = PneumaticRegistry.getInstance().getAirHandlerMachineFactory().createAirHandler(new CustomPressureTier(danger, critical), volume);
         this.config = config.build(this);
         this.config.setCallback((side, oldMode, newMode) -> this.refreshConnectableFaces());
-        this.handler.setConnectableFaces(Arrays.stream(Direction.values()).filter(side -> this.config.getSideMode(side).isEnabled()).toList());
+        this.handler.setConnectableFaces(Arrays.stream(Direction.values()).filter(side -> this.config.getDirectionMode(side).isEnabled()).toList());
     }
 
     private void refreshConnectableFaces() {
-        this.handler.setConnectableFaces(Arrays.stream(Direction.values()).filter(side -> this.config.getSideMode(side).isEnabled()).toList());
+        this.handler.setConnectableFaces(Arrays.stream(Direction.values()).filter(side -> this.config.getDirectionMode(side).isEnabled()).toList());
         this.getManager().getTile().invalidateCapabilities();
         this.getManager().getLevel().updateNeighborsAt(this.getManager().getTile().getBlockPos(), this.getManager().getTile().getBlockState().getBlock());
     }

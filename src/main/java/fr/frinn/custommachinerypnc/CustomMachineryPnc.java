@@ -31,7 +31,7 @@ public class CustomMachineryPnc {
             @Override
             public IAirHandlerMachine getCapability(CustomMachineTile machine, Direction side) {
                 return machine.getComponentManager().getComponent(Registration.PRESSURE_COMPONENT.get())
-                        .filter(component -> component.getConfig().getSideMode(side).isEnabled())
+                        .filter(component -> component.getConfig().getDirectionMode(side).isEnabled())
                         .map(PressureMachineComponent::getHandler)
                         .orElse(null);
             }
