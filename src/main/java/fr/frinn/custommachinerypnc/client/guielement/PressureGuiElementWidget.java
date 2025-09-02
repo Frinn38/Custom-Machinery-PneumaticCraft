@@ -6,6 +6,7 @@ import fr.frinn.custommachinerypnc.common.Registration;
 import fr.frinn.custommachinerypnc.common.guielement.PressureGuiElement;
 import me.desht.pneumaticcraft.api.PneumaticRegistry;
 import me.desht.pneumaticcraft.client.render.pressure_gauge.PressureGaugeRenderer2D;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
@@ -44,7 +45,7 @@ public class PressureGuiElementWidget extends AbstractGuiElementWidget<PressureG
             return super.getTooltips();
         return this.getScreen().getTile().getComponentManager()
                 .getComponent(Registration.PRESSURE_COMPONENT.get())
-                .map(component -> Collections.singletonList((Component)Component.translatable("custommachinerypnc.gui.element.pressure.tooltip", String.format("%.2f", component.getHandler().getPressure()))))
+                .map(component -> Collections.singletonList((Component)Component.translatable("custommachinerypnc.gui.element.pressure.tooltip", Component.literal(String.format("%.2f", component.getHandler().getPressure())).withStyle(ChatFormatting.WHITE)).withStyle(ChatFormatting.GRAY)))
                 .orElse(Collections.emptyList());
     }
 

@@ -2,8 +2,10 @@ package fr.frinn.custommachinerypnc;
 
 import fr.frinn.custommachinery.common.init.CustomMachineTile;
 import fr.frinn.custommachinerypnc.common.Registration;
+import fr.frinn.custommachinerypnc.common.component.HeatMachineComponent;
 import fr.frinn.custommachinerypnc.common.component.PressureMachineComponent;
 import me.desht.pneumaticcraft.api.PNCCapabilities;
+import me.desht.pneumaticcraft.api.heat.IHeatExchangerLogic;
 import me.desht.pneumaticcraft.api.tileentity.IAirHandlerMachine;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
@@ -26,6 +28,7 @@ public class CustomMachineryPnc {
     }
 
     private void attachCapabilities(final RegisterCapabilitiesEvent event) {
+        //Pressure
         event.registerBlockEntity(PNCCapabilities.AIR_HANDLER_MACHINE, fr.frinn.custommachinery.common.init.Registration.CUSTOM_MACHINE_TILE.get(), new ICapabilityProvider<>() {
             @Nullable
             @Override
@@ -33,6 +36,17 @@ public class CustomMachineryPnc {
                 return machine.getComponentManager().getComponent(Registration.PRESSURE_COMPONENT.get())
                         .filter(component -> component.getConfig().getDirectionMode(side).isEnabled())
                         .map(PressureMachineComponent::getHandler)
+                        .orElse(null);
+            }
+        });
+        //Heat
+        event.registerBlockEntity(PNCCapabilities.HEAT_EXCHANGER_BLOCK, fr.frinn.custommachinery.common.init.Registration.CUSTOM_MACHINE_TILE.get(), new ICapabilityProvider<CustomMachineTile, Direction, IHeatExchangerLogic>() {
+            @Override
+            @Nullable
+            public IHeatExchangerLogic getCapability(CustomMachineTile machine, Direction side) {
+                return machine.getComponentManager().getComponent(Registration.HEAT_COMPONENT.get())
+                        .filter(component -> component.getConfig().getDirectionMode(side).isEnabled())
+                        .map(HeatMachineComponent::getHeatExchanger)
                         .orElse(null);
             }
         });

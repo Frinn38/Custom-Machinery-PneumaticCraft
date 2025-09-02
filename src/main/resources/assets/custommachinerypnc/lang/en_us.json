@@ -1,8 +1,17 @@
 {
   "custommachinerypnc.gui.element.pressure.tooltip": "Pressure: %s",
 
+  "custommachinery.machine.component.pnc_heat": "PNC Heat",
+  "custommachinery.machine.component.pressure": "Pressure",
+
+  "custommachinery.machine.guielement.pnc_heat": "PNC Heat",
   "custommachinery.machine.guielement.pressure": "Pressure",
 
+  "custommachinerypnc.gui.creation.components.heat.title": "Heat",
+  "custommachinerypnc.gui.creation.components.heat.capacity": "Capacity",
+  "custommachinerypnc.gui.creation.components.heat.capacity.tooltip": "Higher capacity machines will takes longer to heat up or cool down\nDefault is 1, advanced PNC machines use 100",
+  "custommachinerypnc.gui.creation.components.heat.resistance": "Resistance",
+  "custommachinerypnc.gui.creation.components.heat.resistance.tooltip": "Resistance to external temperatures variations\nDefault is 1, PNC machines use 10",
   "custommachinerypnc.gui.creation.components.pressure.title": "Pressure",
   "custommachinerypnc.gui.creation.components.pressure.volume": "Volume",
   "custommachinerypnc.gui.creation.components.pressure.volume.tooltip": "Air volume of the machine\nGreater volumes will take longer to pressurize",
@@ -11,6 +20,9 @@
   "custommachinerypnc.gui.creation.components.pressure.critical": "Critical",
   "custommachinerypnc.gui.creation.components.pressure.critical.tooltip": "Highest value on the gauge\nAbove, the machine will explode",
   "custommachinerypnc.gui.creation.components.pressure.critical_inferior": "Critical pressure must be superior to danger pressure",
+
+  "custommachinerypnc.gui.creation.gui.heat.min": "Min",
+  "custommachinerypnc.gui.creation.gui.heat.max": "Max",
 
   "custommachinerypnc.jei.ingredient.pressure": "Pressure between %s and %s",
   "custommachinerypnc.jei.ingredient.pressure.volume.input": "Consume %s air",
