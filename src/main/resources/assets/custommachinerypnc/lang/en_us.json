@@ -27,8 +27,16 @@
   "custommachinerypnc.jei.ingredient.pressure": "Pressure between %s and %s",
   "custommachinerypnc.jei.ingredient.pressure.volume.input": "Consume %s air",
   "custommachinerypnc.jei.ingredient.pressure.volume.output": "Produce %s air",
+  "custommachinerypnc.jei.ingredient.heat": "Heat: %s",
+  "custommachinerypnc.jei.ingredient.heat.input": "Consume %s heat",
+  "custommachinerypnc.jei.ingredient.heat.input.per-tick": "Consume %s heat per tick",
+  "custommachinerypnc.jei.ingredient.heat.output": "Produce %s heat",
+  "custommachinerypnc.jei.ingredient.heat.output.per-tick": "Produce %s heat per tick",
+  "custommachinerypnc.jei.ingredient.temperature.range": "Accepted temperatures:\n%s",
 
   "custommachinerypnc.requirements.pressure.error.min": "Pressure must be higher than %s",
   "custommachinerypnc.requirements.pressure.error.max": "Pressure must be lower than %s",
-  "custommachinerypnc.requirements.pressure.error.air": "Not enough air volume, %s needed but %s found!"
+  "custommachinerypnc.requirements.pressure.error.air": "Not enough air volume, %s needed but %s found!",
+  "custommachinerypnc.requirements.heat.error.input": "Not enough heat",
+  "custommachinerypnc.requirements.temperature.error": "Invalid temperature: %s"
 }

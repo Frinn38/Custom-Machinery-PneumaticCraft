@@ -2,6 +2,8 @@ package fr.frinn.custommachinerypnc.client.jei;
 
 import fr.frinn.custommachinery.client.integration.jei.DummyIngredientRenderer;
 import fr.frinn.custommachinerypnc.CustomMachineryPnc;
+import fr.frinn.custommachinerypnc.client.jei.heat.Heat;
+import fr.frinn.custommachinerypnc.client.jei.heat.HeatIngredientHelper;
 import fr.frinn.custommachinerypnc.client.jei.pressure.Pressure;
 import fr.frinn.custommachinerypnc.client.jei.pressure.PressureIngredientHelper;
 import mezz.jei.api.IModPlugin;
@@ -17,6 +19,7 @@ public class CMPncJeiPlugin implements IModPlugin {
 
     public static final ResourceLocation PLUGIN_ID = CustomMachineryPnc.rl("jei_plugin");
     public static final IIngredientType<Pressure> PRESSURE_INGREDIENT = () -> Pressure.class;
+    public static final IIngredientType<Heat> HEAT_INGREDIENT = () -> Heat.class;
 
     @Override
     public ResourceLocation getPluginUid() {
@@ -26,5 +29,6 @@ public class CMPncJeiPlugin implements IModPlugin {
     @Override
     public void registerIngredients(IModIngredientRegistration registration) {
         registration.register(PRESSURE_INGREDIENT, Collections.emptyList(), new PressureIngredientHelper(), new DummyIngredientRenderer<>(), Pressure.CODEC);
+        registration.register(HEAT_INGREDIENT, Collections.emptyList(), new HeatIngredientHelper(), new DummyIngredientRenderer<>(), Heat.CODEC);
     }
 }

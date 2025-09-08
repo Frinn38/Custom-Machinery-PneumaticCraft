@@ -15,7 +15,7 @@ public class HeatGuiElementWidget extends AbstractGuiElementWidget<HeatGuiElemen
 
     public HeatGuiElementWidget(HeatGuiElement element, IMachineScreen screen) {
         super(element, screen, Component.literal("heat"));
-        this.temperatureWidget = new WidgetTemperature(this.getX(), this.getY(), TemperatureRange.of(element.getMin() + 273, element.getMax() + 273), 300, 10);
+        this.temperatureWidget = new WidgetTemperature(this.getX(), this.getY(), TemperatureRange.of(273, 373), 300, 10);
         this.temperatureWidget.autoScaleForTemperature();
         this.setSize(this.temperatureWidget.getWidth(), this.temperatureWidget.getHeight());
     }
@@ -24,7 +24,10 @@ public class HeatGuiElementWidget extends AbstractGuiElementWidget<HeatGuiElemen
     protected void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
         this.getScreen().getTile().getComponentManager()
                 .getComponent(Registration.HEAT_COMPONENT.get())
-                .ifPresent(component -> this.temperatureWidget.setTemperature(component.getHeatExchanger().getTemperatureAsInt()));
+                .ifPresent(component -> {
+                    this.temperatureWidget.setTemperature(component.getHeatExchanger().getTemperatureAsInt());
+                    this.temperatureWidget.autoScaleForTemperature();
+                });
         this.temperatureWidget.render(graphics, mouseX, mouseY, partialTicks);
     }
 

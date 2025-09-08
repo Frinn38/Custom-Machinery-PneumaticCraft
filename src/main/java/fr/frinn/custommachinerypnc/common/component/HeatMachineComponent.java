@@ -13,9 +13,7 @@ import fr.frinn.custommachinery.api.network.ISyncableStuff;
 import fr.frinn.custommachinery.common.network.syncable.DoubleSyncable;
 import fr.frinn.custommachinery.common.network.syncable.ToggleSideConfigSyncable;
 import fr.frinn.custommachinery.impl.component.AbstractMachineComponent;
-import fr.frinn.custommachinery.impl.component.config.SideConfig;
 import fr.frinn.custommachinery.impl.component.config.ToggleSideConfig;
-import fr.frinn.custommachinery.impl.component.config.ToggleSideMode;
 import fr.frinn.custommachinerypnc.common.Registration;
 import me.desht.pneumaticcraft.api.PneumaticRegistry;
 import me.desht.pneumaticcraft.api.heat.IHeatExchangerLogic;
@@ -39,7 +37,10 @@ public class HeatMachineComponent extends AbstractMachineComponent implements IS
         this.capacity = capacity;
         this.resistance = resistance;
         this.config = config.build(this);
-        this.config.setCallback((side, oldMode, newMode) -> this.init());
+        this.config.setCallback((side, oldMode, newMode) -> {
+            this.init();
+            this.getManager().getLevel().updateNeighborsAt(this.getManager().getTile().getBlockPos(), this.getManager().getTile().getBlockState().getBlock());
+        });
         this.heatExchanger = PneumaticRegistry.getInstance().getHeatRegistry().makeHeatExchangerLogic();
         this.heatExchanger.setThermalCapacity(this.capacity);
         this.heatExchanger.setThermalResistance(this.resistance);

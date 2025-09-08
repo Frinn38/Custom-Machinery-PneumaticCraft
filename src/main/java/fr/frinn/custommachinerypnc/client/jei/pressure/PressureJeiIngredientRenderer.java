@@ -44,8 +44,6 @@ public class PressureJeiIngredientRenderer extends JEIIngredientRenderer<Pressur
         return this.element.getHeight();
     }
 
-    //Safe to remove
-    @SuppressWarnings("removal")
     @Override
     public List<Component> getTooltip(Pressure ingredient, TooltipFlag tooltipFlag) {
         return Collections.emptyList();

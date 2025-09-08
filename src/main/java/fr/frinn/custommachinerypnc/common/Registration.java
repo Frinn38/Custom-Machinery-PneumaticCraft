@@ -10,7 +10,10 @@ import fr.frinn.custommachinerypnc.common.component.HeatMachineComponent.Templat
 import fr.frinn.custommachinerypnc.common.component.PressureMachineComponent;
 import fr.frinn.custommachinerypnc.common.guielement.HeatGuiElement;
 import fr.frinn.custommachinerypnc.common.guielement.PressureGuiElement;
+import fr.frinn.custommachinerypnc.common.requirement.HeatPerTickRequirement;
+import fr.frinn.custommachinerypnc.common.requirement.HeatRequirement;
 import fr.frinn.custommachinerypnc.common.requirement.PressureRequirement;
+import fr.frinn.custommachinerypnc.common.requirement.TemperatureRequirement;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.function.Supplier;
@@ -27,5 +30,8 @@ public class Registration {
     public static final Supplier<MachineComponentType<PressureMachineComponent>> PRESSURE_COMPONENT = MACHINE_COMPONENTS.register("pressure", () -> MachineComponentType.create(PressureMachineComponent.Template.CODEC));
     public static final Supplier<MachineComponentType<HeatMachineComponent>>     HEAT_COMPONENT     = MACHINE_COMPONENTS.register("pnc_heat", () -> MachineComponentType.create(Template.CODEC));
 
-    public static final Supplier<RequirementType<PressureRequirement>> PRESSURE_REQUIREMENT = REQUIREMENTS.register("pressure", () -> RequirementType.inventory(PressureRequirement.CODEC));
+    public static final Supplier<RequirementType<PressureRequirement>>    PRESSURE_REQUIREMENT      = REQUIREMENTS.register("pressure", () -> RequirementType.inventory(PressureRequirement.CODEC));
+    public static final Supplier<RequirementType<HeatRequirement>>        HEAT_REQUIREMENT          = REQUIREMENTS.register("pnc_heat", () -> RequirementType.inventory(HeatRequirement.CODEC));
+    public static final Supplier<RequirementType<HeatPerTickRequirement>> HEAT_PER_TICK_REQUIREMENT = REQUIREMENTS.register("pnc_heat_per_tick", () -> RequirementType.inventory(HeatPerTickRequirement.CODEC));
+    public static final Supplier<RequirementType<TemperatureRequirement>> TEMPERATURE_REQUIREMENT   = REQUIREMENTS.register("pnc_temperature", () -> RequirementType.inventory(TemperatureRequirement.CODEC));
 }

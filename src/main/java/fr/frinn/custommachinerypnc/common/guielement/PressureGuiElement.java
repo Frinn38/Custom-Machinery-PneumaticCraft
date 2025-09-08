@@ -37,11 +37,11 @@ public class PressureGuiElement extends AbstractGuiElement implements IComponent
 
     @Override
     public int getWidth() {
-        return super.getWidth() == -1 ? 40 : super.getWidth();
+        return super.getWidth() == -1 ? 45 : super.getWidth();
     }
 
     @Override
     public int getHeight() {
-        return super.getHeight() == -1 ? 40 : super.getHeight();
+        return super.getHeight() == -1 ? 45 : super.getHeight();
     }
 }

@@ -11,6 +11,7 @@ import fr.frinn.custommachinerypnc.client.creation.gui.HeatGuiElementBuilder;
 import fr.frinn.custommachinerypnc.client.creation.gui.PressureGuiElementBuilder;
 import fr.frinn.custommachinerypnc.client.guielement.HeatGuiElementWidget;
 import fr.frinn.custommachinerypnc.client.guielement.PressureGuiElementWidget;
+import fr.frinn.custommachinerypnc.client.jei.heat.HeatGuiElementJeiRenderer;
 import fr.frinn.custommachinerypnc.client.jei.pressure.PressureGuiElementJeiRenderer;
 import fr.frinn.custommachinerypnc.common.Registration;
 import net.neoforged.api.distmarker.Dist;
@@ -41,5 +42,6 @@ public class ClientHandler {
     @SubscribeEvent
     public static void registerGuiElementJeiRenderers(final RegisterGuiElementJEIRendererEvent event) {
         event.register(Registration.PRESSURE_ELEMENT.get(), new PressureGuiElementJeiRenderer());
+        event.register(Registration.HEAT_ELEMENT.get(), new HeatGuiElementJeiRenderer());
     }
 }

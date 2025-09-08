@@ -8,20 +8,15 @@ import fr.frinn.custommachinery.client.screen.creation.component.ComponentConfig
 import fr.frinn.custommachinery.client.screen.creation.component.IMachineComponentBuilder;
 import fr.frinn.custommachinery.client.screen.popup.PopupScreen;
 import fr.frinn.custommachinery.client.screen.widget.DoubleSlider;
-import fr.frinn.custommachinery.client.screen.widget.FloatSlider;
-import fr.frinn.custommachinery.client.screen.widget.IntegerEditBox;
 import fr.frinn.custommachinery.impl.component.config.ToggleSideConfig;
 import fr.frinn.custommachinerypnc.common.Registration;
 import fr.frinn.custommachinerypnc.common.component.HeatMachineComponent;
 import fr.frinn.custommachinerypnc.common.component.HeatMachineComponent.Template;
-import fr.frinn.custommachinerypnc.common.component.PressureMachineComponent;
 import me.desht.pneumaticcraft.common.registry.ModBlocks;
-import me.desht.pneumaticcraft.common.registry.ModItems;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.item.Items;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Consumer;

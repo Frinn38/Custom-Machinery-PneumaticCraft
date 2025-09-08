@@ -12,27 +12,12 @@ public class HeatGuiElement extends AbstractGuiElement implements IComponentGuiE
 
     public static final NamedCodec<HeatGuiElement> CODEC = NamedCodec.record(heatGuiElementInstance ->
             heatGuiElementInstance.group(
-                    makePropertiesCodec().forGetter(HeatGuiElement::getProperties),
-                    NamedCodec.intRange(-273, Integer.MAX_VALUE).optionalFieldOf("min", 0).forGetter(HeatGuiElement::getMin),
-                    NamedCodec.intRange(-273, Integer.MAX_VALUE).optionalFieldOf("max", 100).forGetter(HeatGuiElement::getMax)
+                    makePropertiesCodec().forGetter(HeatGuiElement::getProperties)
             ).apply(heatGuiElementInstance, HeatGuiElement::new), "Heat gui element"
     );
 
-    private final int min;
-    private final int max;
-
-    public HeatGuiElement(Properties properties, int min, int max) {
+    public HeatGuiElement(Properties properties) {
         super(properties);
-        this.min = min;
-        this.max = max;
-    }
-
-    public int getMin() {
-        return this.min;
-    }
-
-    public int getMax() {
-        return this.max;
     }
 
     @Override
@@ -52,11 +37,11 @@ public class HeatGuiElement extends AbstractGuiElement implements IComponentGuiE
 
     @Override
     public int getWidth() {
-        return super.getWidth() == -1 ? 13 : super.getWidth();
+        return super.getWidth() == -1 ? 20 : super.getWidth();
     }
 
     @Override
     public int getHeight() {
-        return super.getHeight() == -1 ? 50 : super.getHeight();
+        return super.getHeight() == -1 ? 55 : super.getHeight();
     }
 }

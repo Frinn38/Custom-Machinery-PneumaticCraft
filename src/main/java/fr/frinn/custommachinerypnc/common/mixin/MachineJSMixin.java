@@ -41,4 +41,32 @@ public abstract class MachineJSMixin {
                 .getComponent(Registration.PRESSURE_COMPONENT.get())
                 .ifPresent(component -> component.getHandler().addAir(air));
     }
+
+    /** HEAT **/
+
+    public void addPNCHeat(double amount) {
+        this.internal.getComponentManager()
+                .getComponent(Registration.HEAT_COMPONENT.get())
+                .ifPresent(component -> component.getHeatExchanger().addHeat(amount));
+    }
+
+    public double getPNCTemperature() {
+        return this.internal.getComponentManager()
+                .getComponent(Registration.HEAT_COMPONENT.get())
+                .map(component -> component.getHeatExchanger().getTemperature())
+                .orElse(0.0D);
+    }
+
+    public double getAmbientPNCTemperature() {
+        return this.internal.getComponentManager()
+                .getComponent(Registration.HEAT_COMPONENT.get())
+                .map(component -> component.getHeatExchanger().getAmbientTemperature())
+                .orElse(0.0D);
+    }
+
+    public void setPNCTemperature(double temperature) {
+        this.internal.getComponentManager()
+                .getComponent(Registration.HEAT_COMPONENT.get())
+                .ifPresent(component -> component.getHeatExchanger().setTemperature(temperature));
+    }
 }
