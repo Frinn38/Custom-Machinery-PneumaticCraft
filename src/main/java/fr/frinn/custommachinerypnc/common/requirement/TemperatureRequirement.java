@@ -26,7 +26,7 @@ public record TemperatureRequirement(IntRange range) implements IRequirement<Hea
 
     public static final NamedCodec<TemperatureRequirement> CODEC = NamedCodec.record(temperatureRequirementInstance ->
             temperatureRequirementInstance.group(
-                    IntRange.CODEC.fieldOf("range").forGetter(TemperatureRequirement::range)
+                    IntRange.CODEC.fieldOf("temperature").forGetter(TemperatureRequirement::range)
             ).apply(temperatureRequirementInstance, TemperatureRequirement::new), "PNC Temperature requirement"
     );
     @Override
@@ -46,15 +46,15 @@ public record TemperatureRequirement(IntRange range) implements IRequirement<Hea
 
     @Override
     public boolean test(HeatMachineComponent component, ICraftingContext context) {
-        return this.range.contains(component.getHeatExchanger().getTemperatureAsInt());
+        return this.range.contains(component.getHeatExchanger().getTemperatureAsInt() - 273);
     }
 
     @Override
     public void gatherRequirements(IRequirementList<HeatMachineComponent> list) {
         list.inventoryCondition(((component, context) -> {
-            if(this.range.contains(component.getHeatExchanger().getTemperatureAsInt()))
+            if(this.range.contains(component.getHeatExchanger().getTemperatureAsInt() - 273))
                 return CraftingResult.success();
-            return CraftingResult.error(Component.translatable("custommachinerypnc.requirements.temperature.error", component.getHeatExchanger().getTemperatureAsInt()));
+            return CraftingResult.error(Component.translatable("custommachinerypnc.requirements.temperature.error", component.getHeatExchanger().getTemperatureAsInt() - 273));
         }));
     }
 
