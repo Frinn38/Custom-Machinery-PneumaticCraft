@@ -1,0 +1,42 @@
+{
+  "custommachinerypnc.gui.element.pressure.tooltip": "压力：%s",
+
+  "custommachinery.machine.component.pnc_heat": "气动工艺热量",
+  "custommachinery.machine.component.pressure": "压力",
+
+  "custommachinery.machine.guielement.pnc_heat": "气动工艺热量",
+  "custommachinery.machine.guielement.pressure": "压力",
+
+  "custommachinerypnc.gui.creation.components.heat.title": "热量",
+  "custommachinerypnc.gui.creation.components.heat.capacity": "热容",
+  "custommachinerypnc.gui.creation.components.heat.capacity.tooltip": "机器的热容越高，其加热或冷却所需时间就越长\n默认值为1，气动工艺的高级机器为100",
+  "custommachinerypnc.gui.creation.components.heat.resistance": "热阻抗",
+  "custommachinerypnc.gui.creation.components.heat.resistance.tooltip": "抵抗外部温度变化的能力\n默认值为1，气动工艺的高级机器为100",
+  "custommachinerypnc.gui.creation.components.pressure.title": "压力",
+  "custommachinerypnc.gui.creation.components.pressure.volume": "容量",
+  "custommachinerypnc.gui.creation.components.pressure.volume.tooltip": "机器的空气容量\n容量越大，升压需要的时间就越长",
+  "custommachinerypnc.gui.creation.components.pressure.danger": "危险值",
+  "custommachinerypnc.gui.creation.components.pressure.danger.tooltip": "压力表中红色压力区间的起始值\n高于此值，机器有概率爆炸",
+  "custommachinerypnc.gui.creation.components.pressure.critical": "临界值",
+  "custommachinerypnc.gui.creation.components.pressure.critical.tooltip": "压力表的最大值\n高于此值，机器将爆炸",
+  "custommachinerypnc.gui.creation.components.pressure.critical_inferior": "临界压力必须高于危险压力",
+
+  "custommachinerypnc.gui.creation.gui.heat.min": "最小",
+  "custommachinerypnc.gui.creation.gui.heat.max": "最大",
+
+  "custommachinerypnc.jei.ingredient.pressure": "压力介于%s与%s之间",
+  "custommachinerypnc.jei.ingredient.pressure.volume.input": "消耗%s空气",
+  "custommachinerypnc.jei.ingredient.pressure.volume.output": "产出%s空气",
+  "custommachinerypnc.jei.ingredient.heat": "热量：%s",
+  "custommachinerypnc.jei.ingredient.heat.input": "消耗%s热量",
+  "custommachinerypnc.jei.ingredient.heat.input.per-tick": "每刻消耗%s热量",
+  "custommachinerypnc.jei.ingredient.heat.output": "产出%s热量",
+  "custommachinerypnc.jei.ingredient.heat.output.per-tick": "每刻产出%s热量",
+  "custommachinerypnc.jei.ingredient.temperature.range": "可接受温度：\n%s",
+
+  "custommachinerypnc.requirements.pressure.error.min": "压力必须高于%s",
+  "custommachinerypnc.requirements.pressure.error.max": "压力必须低于%s",
+  "custommachinerypnc.requirements.pressure.error.air": "空气容量不足，需要%s，但只发现%s！",
+  "custommachinerypnc.requirements.heat.error.input": "热量不足",
+  "custommachinerypnc.requirements.temperature.error": "无效的温度：%s"
+}
