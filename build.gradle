@@ -316,7 +316,7 @@ unifiedPublishing {
         if (MODRINTH_TOKEN != null) {
             modrinth {
                 token = MODRINTH_TOKEN
-                id = "VFxg3xmP"
+                id = "ZjxMGJ5S"
                 relations {
                     depends "custom-machinery"
                     depends "pneumaticcraft-repressurized"
