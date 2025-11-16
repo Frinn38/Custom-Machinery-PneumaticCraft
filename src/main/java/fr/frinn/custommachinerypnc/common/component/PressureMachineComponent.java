@@ -34,6 +34,7 @@ public class PressureMachineComponent extends AbstractMachineComponent implement
     public PressureMachineComponent(IMachineComponentManager manager, int volume, float danger, float critical, ToggleSideConfig.Template config) {
         super(manager, ComponentIOMode.BOTH);
         this.handler = PneumaticRegistry.getInstance().getAirHandlerMachineFactory().createAirHandler(new CustomPressureTier(danger, critical), volume);
+        this.upgradeableI(volume, "volume", 0, Integer.MIN_VALUE, this.handler::setBaseVolume);
         this.config = config.build(this);
         this.config.setCallback((side, oldMode, newMode) -> this.refreshConnectableFaces());
         this.handler.setConnectableFaces(Arrays.stream(Direction.values()).filter(side -> this.config.getDirectionMode(side).isEnabled()).toList());

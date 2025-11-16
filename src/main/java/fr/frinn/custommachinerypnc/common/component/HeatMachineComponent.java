@@ -27,23 +27,22 @@ import java.util.function.Consumer;
 
 public class HeatMachineComponent extends AbstractMachineComponent implements ISideConfigComponent, ITickableComponent, ISerializableComponent, ISyncableStuff {
 
-    private final double capacity;
-    private final double resistance;
     private final ToggleSideConfig config;
     private final IHeatExchangerLogic heatExchanger;
+    private double prevTemp;
 
     public HeatMachineComponent(IMachineComponentManager manager, double capacity, double resistance, ToggleSideConfig.Template config) {
         super(manager, ComponentIOMode.BOTH);
-        this.capacity = capacity;
-        this.resistance = resistance;
+        this.upgradeableD(capacity, "capacity", 0.0D, Double.MAX_VALUE, this.getHeatExchanger()::setThermalCapacity);
+        this.upgradeableD(resistance, "resistance", 0.0D, Double.MAX_VALUE, this.getHeatExchanger()::setThermalResistance);
         this.config = config.build(this);
         this.config.setCallback((side, oldMode, newMode) -> {
             this.init();
             this.getManager().getLevel().updateNeighborsAt(this.getManager().getTile().getBlockPos(), this.getManager().getTile().getBlockState().getBlock());
         });
         this.heatExchanger = PneumaticRegistry.getInstance().getHeatRegistry().makeHeatExchangerLogic();
-        this.heatExchanger.setThermalCapacity(this.capacity);
-        this.heatExchanger.setThermalResistance(this.resistance);
+        this.heatExchanger.setThermalCapacity(capacity);
+        this.heatExchanger.setThermalResistance(resistance);
     }
 
     public IHeatExchangerLogic getHeatExchanger() {
@@ -68,6 +67,9 @@ public class HeatMachineComponent extends AbstractMachineComponent implements IS
     @Override
     public void serverTick() {
         this.heatExchanger.tick();
+        if(this.prevTemp != this.heatExchanger.getTemperature())
+            this.getManager().markDirty();
+        this.prevTemp = this.heatExchanger.getTemperature();
     }
 
     @Override
