@@ -33,8 +33,6 @@ public class HeatMachineComponent extends AbstractMachineComponent implements IS
 
     public HeatMachineComponent(IMachineComponentManager manager, double capacity, double resistance, ToggleSideConfig.Template config) {
         super(manager, ComponentIOMode.BOTH);
-        this.upgradeableD(capacity, "capacity", 0.0D, Double.MAX_VALUE, this.getHeatExchanger()::setThermalCapacity);
-        this.upgradeableD(resistance, "resistance", 0.0D, Double.MAX_VALUE, this.getHeatExchanger()::setThermalResistance);
         this.config = config.build(this);
         this.config.setCallback((side, oldMode, newMode) -> {
             this.init();
@@ -43,6 +41,8 @@ public class HeatMachineComponent extends AbstractMachineComponent implements IS
         this.heatExchanger = PneumaticRegistry.getInstance().getHeatRegistry().makeHeatExchangerLogic();
         this.heatExchanger.setThermalCapacity(capacity);
         this.heatExchanger.setThermalResistance(resistance);
+        this.upgradeableD(capacity, "capacity", 0.0D, Double.MAX_VALUE, this.getHeatExchanger()::setThermalCapacity);
+        this.upgradeableD(resistance, "resistance", 0.0D, Double.MAX_VALUE, this.getHeatExchanger()::setThermalResistance);
     }
 
     public IHeatExchangerLogic getHeatExchanger() {
