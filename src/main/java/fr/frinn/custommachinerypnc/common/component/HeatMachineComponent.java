@@ -33,7 +33,7 @@ public class HeatMachineComponent extends AbstractMachineComponent implements IS
 
     public HeatMachineComponent(IMachineComponentManager manager, double capacity, double resistance, ToggleSideConfig.Template config) {
         super(manager, ComponentIOMode.BOTH);
-        this.config = config.build(this);
+        this.config = config.build(manager.facing());
         this.config.setCallback((side, oldMode, newMode) -> {
             this.init();
             this.getManager().getLevel().updateNeighborsAt(this.getManager().getTile().getBlockPos(), this.getManager().getTile().getBlockState().getBlock());

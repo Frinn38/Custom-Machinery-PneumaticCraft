@@ -53,7 +53,7 @@ public class PressureComponentBuilder implements IMachineComponentBuilder<Pressu
 
         @Override
         public Template makeTemplate() {
-            return new Template(this.volume.getIntValue(), this.danger.floatValue(), this.critical.floatValue(), this.config);
+            return new Template(this.volume.intValue(), this.danger.floatValue(), this.critical.floatValue(), this.config);
         }
 
         @Override
